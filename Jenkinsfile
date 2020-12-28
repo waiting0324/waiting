@@ -28,15 +28,14 @@ pipeline {
             steps{
                 echo '刪除容器'
                 steps{
-                sh label: '', script: '''echo \'檢查容器是否存在\'
-                containerid=`docker ps -a | grep -w waiting | awk \'{print
-                $1}\'`
-                if [ "$containerid" != "" ];then
-                echo ‘容器存在，停止容器’
-                docker stop $containerid
-                echo ‘刪除容器’
-                docker rm $containerid
-                fi'''
+                    sh label: '', script: '''echo \'檢查容器是否存在\'
+                    containerid=`docker ps -a | grep -w waiting | awk \'{print $1}\'`
+                    if [ "$containerid" != "" ];then
+                      echo \'容器存在，停止容器\'
+                      docker stop $containerid
+                      echo \'刪除容器\'
+                      docker rm $containerid
+                    fi'''
                 }
             }
         }
