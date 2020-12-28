@@ -42,30 +42,25 @@ pipeline {
         stage('刪除鏡像') {
             steps{
                 echo '刪除鏡像'
-                sh label: '', script: '''echo \'檢查鏡像是否存在\'
-                imageid=`docker images | grep waiting | awk \'{print $3}\'`
-                if [ "$imageid" != "" ];then
-                echo \'刪除鏡像\'
-                docker rmi -f $imageid
-                fi'''
+
             }
         }
         stage('登入 Docker Hub') {
             steps{
                 echo '登入 Docker Hub'
-                sh label: '', script: 'docker login -u tony60107 -p s89236001'
+                //sh label: '', script: 'docker login -u tony60107 -p s89236001'
             }
         }
         stage('拉取鏡像') {
             steps{
                 echo '拉取鏡像'
-                sh label: '', script: 'docker pull tony60107/waiting:1.0'
+                //sh label: '', script: 'docker pull tony60107/waiting:1.0'
             }
         }
         stage('運行容器') {
             steps{
                 echo '運行容器'
-                sh label: '', script: 'docker run -itd --name waiting --restart always -p 8080:8080 tony60107/waiting:1.0'
+                //sh label: '', script: 'docker run -itd --name waiting --restart always -p 8080:8080 tony60107/waiting:1.0'
             }
         }
     }
