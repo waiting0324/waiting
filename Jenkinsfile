@@ -15,11 +15,13 @@ pipeline {
         stage('拉取代碼') {
             steps{
                 echo '拉取代碼'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'c9b7c84c-2013-470b-9f28-0c04bf1c9496', url: 'https://github.com/waiting0324/waiting.git']]])
             }
         }
         stage('編譯構建') {
             steps{
                 echo '編譯構建'
+                sh label: '', script: 'mvn clean package -Dmaven.test.skip=true jib:build'
             }
         }
         stage('刪除容器') {
