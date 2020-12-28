@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.waiting</groupId>
+    <artifactId>demo</artifactId>
+    <version>1.0</version>
+    <name>waiting</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!--打包出來的Jar包名稱-->
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <!-- 基礎鏡像 -->
+                    <from>
+                        <image>openjdk:8-alpine3.9</image>
+                    </from>
+                    <!-- 要產生的鏡像 -->
+                    <to>
+                        <image>tony60107/${project.name}:${project.version}</image>
+                        <auth>
+                            <username>tony60107</username>
+                            <password>s89236001</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <!-- 配置 JVM 虛擬機參數 -->
+                        <jvmFlags>
+                            <jvmFlag>-Xms512m</jvmFlag>
+                        </jvmFlags>
+                        <!-- 配置使用的時區 -->
+                        <environment>
+                            <TZ>Asia/Shanghai</TZ>
+                        </environment>
+                        <!-- 要暴露的端口 -->
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                    </container>
+                    <!-- 允許使用 HTTP 進行訪問 -->
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- 與 Maven 的 Package 生命週期進行綁定 -->
+                        <phase>package</phase>
+                        <!-- 與 JIB 的 build 參數(將鏡像推送到遠程倉庫)進行綁定 -->
+                        <goals>
+                            <goal>
+                                build
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
